@@ -30,6 +30,7 @@ float* transpad(int m, int n, float *inputfloat)
 		}
 	}
 	return returnfloat;
+	free (returnfloat);
 }
 void sgemm( int m, int n, float *A, float *C )
 {
@@ -40,35 +41,29 @@ void sgemm( int m, int n, float *A, float *C )
 	//dont ry this might make slower on different computers
 	 __builtin_prefetch(&A);
 	 __builtin_prefetch(&C);*/
-
 	  for( int j = 0; j < m; j++ )
 	  {
 	    for( int k = 0; k < n; k++ )
 	    {
 	      for( int i = 0; i < m; i++ )
 	      {
-	      	/*going to change this multiplier to be the padded c = padded a (colum major)  *padded a (row major) */
+	//going to change this multiplier to be the padded c(column major) = padded a (colum major)  *padded a (row major) 
 	        	c+=a*b;
 	    	}
 		}
 	}
-	free (padded_A);
-}
 
-/*
-	// this 
-	  for( int j = 0; j < mpad; j++ )
+	free (padded_A);
+	free (padded_C);
+}
+/*		float tmp = b;
+	  for( int j = 0; j < m; j++ )
 	  {
-	    for( int k = 0; k < npad; k++ )
-	    {
-	      for( int i = 0; i < mpad; i++ )
-	      {
-	        	c+=a*b;
-	    	}
-		}
+	        	c+=a*tmp;
 	}
 	free (padded_A);
-}
+	free (padded_A);
+	
+} */
 
 
-*/
